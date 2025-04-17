@@ -35,6 +35,7 @@ function getContentType(filename) {
 export async function onRequestGet(context) {
   // 從上下文獲取環境變數 (包含 R2 繫結) 和請求參數
   const { request, env, params } = context;
+  console.log(env);
 
   // 獲取 R2 儲存貯體繫結
   const R2_BUCKET = env['${R2_BINDING_VARIABLE_NAME}'];
