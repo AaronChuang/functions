@@ -23,7 +23,6 @@ function getContentType(filename) {
       return 'image/x-icon';
     case 'avif':
       return 'image/avif';
-    // 您可以根據需要添加更多圖片類型
     default:
       return 'application/octet-stream'; // 預設二進位流
   }
@@ -38,9 +37,7 @@ export async function onRequestGet(context) {
   const { request, env, params } = context;
 
   // 獲取 R2 儲存貯體繫結
-  // R2_BINDING_VARIABLE_NAME 的值是在上面 bash 指令碼中設定的，
-  // 它應該對應您在 Cloudflare Pages 設定中繫結 R2 時使用的 "變數名稱"
-  const R2_BUCKET = env.${R2_BINDING_VARIABLE_NAME};
+  const R2_BUCKET = env['${R2_BINDING_VARIABLE_NAME}'];
 
   // 檢查 R2 繫結是否存在
   if (!R2_BUCKET) {
@@ -94,7 +91,7 @@ export async function onRequestGet(context) {
 
 export async function onRequestHead(context) {
   const { env, params } = context;
-  const R2_BUCKET = env.${R2_BINDING_VARIABLE_NAME};
+  const R2_BUCKET = env['${R2_BINDING_VARIABLE_NAME}'];
   if (!R2_BUCKET) { return new Response(null, { status: 500 }); }
   const objectKey = params.path?.join('/');
   if (!objectKey) { return new Response(null, { status: 400 }); }
